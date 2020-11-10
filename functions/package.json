@@ -19,5 +19,10 @@
     "devDependencies": {
         "firebase-functions-test": "^0.2.0"
     },
+    "electronWebpack": {
+        "whiteListedModules": [
+            "firebase"
+        ]
+    },
     "private": true
 }
