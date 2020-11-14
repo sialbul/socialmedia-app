@@ -13,7 +13,7 @@ app.post('/signup', signup);
 //login route
 app.post('/login', login);
 
-app.post('/user/image', uploadImage);
+app.post('/user/image', FBAuth, uploadImage);
 
 
 exports.api = functions.https.onRequest(app);
