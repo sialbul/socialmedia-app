@@ -21,18 +21,20 @@ exports.signup = (req, res) => {
     let token, userId;
 
     db.doc(`/users/${newUser.handle}`).get()
-        .then(doc => {
-            if (doc.exist) {
+        .then((doc) => {
+            if (doc.exists) {
                 return res.status(400).json({
-                    handle: 'this handle is laready taken'
+                    handle: 'this handle is already taken'
                 });
             } else {
+                console.log(newUser.email, newUser.password);
+
                 return firebase
                     .auth().createUserWithEmailAndPassword(newUser.email, newUser.password)
 
             }
         })
-        .then(data => {
+        .then((data) => {
             userId = data.user.uid;
             return data.user.getIdToken()
         })
@@ -55,9 +57,10 @@ exports.signup = (req, res) => {
             if (err.code === 'auth/email-already-in-use') {
                 return res.status(400).json({ email: 'Email is already in use' })
             } else {
-                return res.status(500).json({ error: err.code });
+                return res.status(500).json({ general: "Something went wrong, please try again" });
             }
         });
+
 }
 
 exports.login = (req, res) => {
@@ -71,17 +74,17 @@ exports.login = (req, res) => {
     if (!valid) return res.status(400).json(errors);
 
     firebase.auth().signInWithEmailAndPassword(user.email, user.password)
-        .then(data => {
+        .then((data) => {
             return data.user.getIdToken();
         })
-        .then(token => {
+        .then((token) => {
             return res.json({ token });
         })
         .catch((err) => {
             console.error(err);
-            if (err.code === 'auth/wrong-password') {
-                return res.status(403).json({ general: 'Wrong credentials, please try again' });
-            } else return res.status(500).json({ error: err.code })
+            return res
+                .status(403)
+                .json({ general: "Wrong credentials, please try again" });
         });
 }
 
@@ -95,13 +98,18 @@ exports.uploadImage = (req, res) => {
 
     let imageFileName;
     let imageToBeUploaded = {};
+    let generatedToken = uuid();
+
 
     busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-        console.log(fieldname);
-        console.log(filename);
-        console.log(mimetype);
+        console.log(fieldname, file, filename, encoding, mimetype);
+        if (mimetype !== "image/jpeg" && mimetype !== "image/png") {
+            return res.status(400).json({ error: "Wrong file type submitted" });
+        }
         const imageExtension = filename.split('.')[filename.split('.').length - 1];
-        imageFileName = `${Math.round(Math.random() * 10000000000)}.${imageExtension}`;
+        imageFileName = `${Math.round(
+            Math.random() * 1000000000000
+        ).toString()}.${imageExtension}`;
         const filepath = path.join(os.tmpdir(), imageFileName);
         imageToBeUploaded = { filepath, mimetype };
         file.pipe(fs.createWriteStream(filepath));
@@ -111,12 +119,14 @@ exports.uploadImage = (req, res) => {
                 resumable: false,
                 metadata: {
                     metadata: {
-                        contentType: imageToBeUploaded.mimetype
+                        contentType: imageToBeUploaded.mimetype,
+                        firebaseStorageDownloadTokens: generatedToken,
+
                     }
                 }
             })
             .then(() => {
-                const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFileName}?alt=media`
+                const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFileName}?alt=media&token=${generatedToken}`
                 return db.doc(`/users/${req.user.handle}`).update({ imageUrl });
             })
             .then(() => {
@@ -127,4 +137,6 @@ exports.uploadImage = (req, res) => {
                 return res.status(500).json({ error: err.code })
             })
     })
+    busboy.end(req.rawBody);
+
 };
