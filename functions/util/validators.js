@@ -6,7 +6,7 @@ const isEmail = (email) => {
 
 }
 const isEmpty = (string) => {
-    if (string.trim() === '') return true;
+    if (string === '') return true;
     else return false;
 }
 
@@ -18,7 +18,6 @@ exports.validateSignupData = (data) => {
     } else if (!isEmail(data.email)) {
         errors.email = 'Must be a valid email address';
     }
-
     if (isEmpty(data.password)) errors.password = 'Must not be empty';
     if (data.password !== data.confirmPassword)
         errors.confirmPassword = 'Passwords must match';
