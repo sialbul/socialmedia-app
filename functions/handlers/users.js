@@ -107,27 +107,44 @@ exports.addUserDetails = (req, res) => {
 
 //get own user details
 exports.getAuthenticatedUser = (req, res) => {
-        let userData = {};
-        db.doc(`/users/${req.user.handle}`).get()
-            .then((doc) => {
-                if (doc.exists) {
-                    userData.credentials = doc.data();
-                    return db.collection('likes').where("userHandle", '==', req.user.handle).get();
-                }
-            })
-            .then((data) => {
-                userData.likes = [];
-                data.forEach(doc => {
-                    userData.likes.push(doc.data());
-                });
-                return res.json(userData);
-            })
-            .catch((err) => {
-                console.error(err);
-                return res.status(500).json({ error: err.code });
+    let userData = {};
+    db.doc(`/users/${req.user.handle}`).get()
+        .then((doc) => {
+            if (doc.exists) {
+                userData.credentials = doc.data();
+                return db.collection('likes').where("userHandle", '==', req.user.handle).get();
+            }
+        })
+        .then((data) => {
+            userData.likes = [];
+            data.forEach(doc => {
+                userData.likes.push(doc.data());
             });
-    }
-    //upload a profile photo for user
+            return db.collection('notifications').where('recipient', '==', req.user.handle)
+                .orderBy('createdAt', 'desc').limit(10).get();
+
+        })
+        .then((data) => {
+            userData.notifications = [];
+            data.forEach(doc => {
+                userData.notifications.push({
+                    recipient: doc.data().recipient,
+                    sender: doc.data().sender,
+                    read: doc.data().read,
+                    screamId: doc.data().screamId,
+                    type: doc.data().type,
+                    createdAt: doc.data().createdAt,
+                    notificationId: doc.id
+                });
+            });
+            return res.json(userData);
+        })
+        .catch((err) => {
+            console.error(err);
+            return res.status(500).json({ error: err.code });
+        });
+};
+//upload a profile photo for user
 exports.uploadImage = (req, res) => {
     const Busboy = require('busboy');
     const path = require('path');
