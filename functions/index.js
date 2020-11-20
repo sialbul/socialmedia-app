@@ -50,6 +50,20 @@ exports.createNotificationOnLike = functions.firestore.document('likes/{id')
                 console.error(err);
                 return;
             });
+    });
+
+exports.deleteNotificationOnUnlike = functions
+    .firestore.document('likes/{id}')
+    .onDelete((snapshot) => {
+        db.doc(`/notifications/${snapshot.id}`)
+            .delete()
+            .then(() => {
+                return;
+            })
+            .catch((err) => {
+                console.error(err);
+                return;
+            });
     })
 
 exports.createNotificationOnComment = functions
