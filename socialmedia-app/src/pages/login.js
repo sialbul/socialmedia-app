@@ -4,7 +4,7 @@ export class login extends Component {
     render() {
         return (
             <div>
-                <h1> login page </h1>{" "}
+                <h1>Login page </h1>{" "}
             </div>
         );
     }
