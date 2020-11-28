@@ -35,16 +35,12 @@ class Scream extends Component {
         } = this.props;
         return (
             <Card className={classes.card}>
-                <CardMedia 
-                image={userImage}
-                title="Profile Image"
-                className= {classes.image}
-                 />
-                 <CardContent className={classes.content}>
+                <CardMedia image={userImage} title="Profile Image" className= {classes.image} />
+                <CardContent className={classes.content}>
                      <Typography variant="h5" component={Link} to={`/users/${userHandle}`} color="secondary">{userHandle}</Typography>
                      <Typography variant="body2" color="textSecondary">{createdAt}</Typography>
                      <Typography variant="body1">{body}</Typography>
-                 </CardContent>
+                </CardContent>
             </Card>
         );
     }
