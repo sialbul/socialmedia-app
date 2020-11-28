@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 import AppIcon from "../images/head.png";
+import Axios from 'axios';
 
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
@@ -17,12 +18,15 @@ const styles = {
         maxHeight: 80,
         margin: "20px auto 20px auto",
     },
-    pageTitle:{
+    pageTitle: {
         margin: "10px auto 10px auto",
     },
-    button:{
+    button: {
         marginTop: 20,
-    }
+    },
+    textField: {
+        margin: "10px auto 10px auto",
+    },
 };
 
 class login extends Component {
@@ -36,8 +40,31 @@ class login extends Component {
         };
     }
     handleSubmit = (event) => {
-        console.log("hi");
-    };
+        event.preventDefault();
+        this.setState({
+            loadingLtrue
+        })
+        const userData={
+            email:this.state.email,
+            password:this.state.password
+        }
+        axios.post('/login', userData)
+        .then(res =>{
+            console.log(res.data);
+            this.setState({
+                loading:false
+            });
+            this.props.history.push('/');
+        })
+        .catch(err =>{
+            this.setState({
+                errors: err.response.data,
+                loading:false
+
+            })
+            
+    });
+}
 
     handleChange = (event) => {
         this.setState({
@@ -46,6 +73,7 @@ class login extends Component {
     };
     render() {
         const { classes } = this.props;
+        const {errors, loading} = this.state;
         return (
             <Grid container className={classes.form}>
                 <Grid item sm />
@@ -79,7 +107,13 @@ class login extends Component {
                             onChange={this.handleChange}
                             fullWidth
                         />
-                        <Button type="submit" variant="contained" color="primary" className= {classes.button}>Submit</Button>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}>
+                            Submit
+                        </Button>
                     </form>
                 </Grid>
                 <Grid item sm />
