@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 import AppIcon from "../images/head.png";
-import Axios from 'axios';
+import axios from 'axios';
 
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
@@ -27,6 +27,12 @@ const styles = {
     textField: {
         margin: "10px auto 10px auto",
     },
+    customError:{
+        color:'red',
+        fontSize:'0.8rem',
+        marginTop: 10
+
+    }
 };
 
 class login extends Component {
@@ -42,7 +48,7 @@ class login extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         this.setState({
-            loadingLtrue
+            loading: true
         })
         const userData={
             email:this.state.email,
@@ -93,6 +99,8 @@ class login extends Component {
                             type="email"
                             label="Email"
                             className={classes.textField}
+                            helperText={errors.email}
+                            error={errors.email ? true : false}
                             value={this.state.email}
                             onChange={this.handleChange}
                             fullWidth
@@ -103,10 +111,18 @@ class login extends Component {
                             type="password"
                             label="Password"
                             className={classes.textField}
+                            helperText={errors.password}
+                            error={errors.password ? true : false}
                             value={this.state.password}
                             onChange={this.handleChange}
                             fullWidth
                         />
+                        {errors.general&& (
+                            <Typography variant="body2"
+                            className={classes.customError}>
+                                {errors.general}
+                            </Typography>
+                        ) }
                         <Button
                             type="submit"
                             variant="contained"
