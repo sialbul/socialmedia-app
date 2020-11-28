@@ -17,6 +17,7 @@ const styles = {
     },
     image:{
         minWidth:200,
+        height:0
     },
     content:{
         padding:25,
