@@ -2,61 +2,30 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import themeFile from "./util/theme";
+import jwtDecode from 'jwt-decode';
 //Components
 import Navbar from "./components/Navbar";
+import AuthRoute from './util/AuthRoute';
 
 //Pages
 import home from "./pages/home";
 import login from "./pages/login";
 import signup from "./pages/signup";
 
-const theme = createMuiTheme({
-    palette: {
-        primary: {
-            light: "#d7e360",
-            main: "#cddc39",
-            dark: "#8f9a27",
-            contrastText: "#fff",
-        },
-        secondary: {
-            light: "#f73378",
-            main: "#f50057",
-            dark: "#ab003c",
-            contrastText: "#fff",
-        },
-    },
-        spreadThis: {
+const theme = createMuiTheme(themeFile);
 
-    typography:{
-      useNextVariants: true,
-    },
-     form: {
-        textAlign: "center",
-    },
-    image: {
-        maxHeight:80,
-        margin: "20px auto 20px auto",
-    },
-    pageTitle: {
-        margin: "10px auto 10px auto",
-    },
-    button: {
-        marginTop: 20,
-        position:"relative"
-    },
-    textField: {
-        margin: "10px auto 10px auto",
-    },
-    customError:{
-        color:'red',
-        fontSize:'0.8rem',
-        marginTop: 10
-    },
-    progress:{
-        position: 'absolute'
-    }
-        }
-});
+let authenticated;
+const token = localStorage.FBIdToken;
+if(token){
+const decodedToken =jwtDecode(token);
+if(decodedToken.exp *1000 < Date.now()){
+    window.location.href = '/login'
+    authenticated =false;
+}else{
+    authenticated =true;
+}
+}
 
 function App() {
     return (
@@ -67,8 +36,8 @@ function App() {
                     <div className="container">
                         <Switch>
                             <Route path="/" exact component={home} />
-                            <Route path="/login" component={login} />
-                            <Route path="/signup" component={signup} />
+                            <AuthRoute path="/login" exact component={login} authenticated={authenticated} />
+                            <AuthRoute path="/signup" exact component={signup} authenticated={authenticated} />
                         </Switch>
                     </div>
                 </Router>
