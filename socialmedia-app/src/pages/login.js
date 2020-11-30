@@ -11,35 +11,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-
-const styles = {
-    form: {
-        textAlign: "center",
-    },
-
-    image: {
-        maxHeight: 80,
-        margin: "20px auto 20px auto",
-    },
-    pageTitle: {
-        margin: "10px auto 10px auto",
-    },
-    button: {
-        marginTop: 20,
-        position:"relative"
-    },
-    textField: {
-        margin: "10px auto 10px auto",
-    },
-    customError:{
-        color:'red',
-        fontSize:'0.8rem',
-        marginTop: 10
-    },
-    progress:{
-        position: 'absolute'
-    }
-};
+const styles = (theme) =>({
+    ...theme.spreadThis
+})
 
 class login extends Component {
     constructor() {
@@ -63,6 +37,7 @@ class login extends Component {
         axios.post('/login', userData)
         .then(res =>{
             console.log(res.data);
+            localStorage.setItem('FBIdToken',`Bearer ${res.data.token}`);
             this.setState({
                 loading:false
             });
@@ -95,7 +70,7 @@ class login extends Component {
                         alt="Man Image"
                         className={classes.image}
                     />
-                    <Typography variant="h2" className={classes.pageTitle}>
+                    <Typography variant="h3" className={classes.pageTitle}>
                         Login
                     </Typography>
                     <form noValidate onSubmit={this.handleSubmit}>
