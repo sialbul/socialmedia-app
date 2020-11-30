@@ -9,6 +9,8 @@ import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 const styles = {
     form: {
@@ -24,6 +26,7 @@ const styles = {
     },
     button: {
         marginTop: 20,
+        position:"relative"
     },
     textField: {
         margin: "10px auto 10px auto",
@@ -32,7 +35,9 @@ const styles = {
         color:'red',
         fontSize:'0.8rem',
         marginTop: 10
-
+    },
+    progress:{
+        position: 'absolute'
     }
 };
 
@@ -128,8 +133,12 @@ class login extends Component {
                             type="submit"
                             variant="contained"
                             color="primary"
-                            className={classes.button}>
+                            className={classes.button}
+                            disabled={loading}>
                             Submit
+                            {loading && (
+                                <CircularProgress size={30} className={classes.progress}/>
+                            )}
                         </Button>
                         <br/>
                         <small>Dont have an account? Sign up <Link to="/signup">here</Link></small>
