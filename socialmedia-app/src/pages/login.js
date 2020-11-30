@@ -3,6 +3,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 import AppIcon from "../images/head.png";
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
@@ -130,6 +131,8 @@ class login extends Component {
                             className={classes.button}>
                             Submit
                         </Button>
+                        <br/>
+                        <small>Dont have an account? Sign up <Link to="/signup">here</Link></small>
                     </form>
                 </Grid>
                 <Grid item sm />
