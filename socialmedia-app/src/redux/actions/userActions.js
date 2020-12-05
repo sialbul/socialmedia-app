@@ -1,7 +1,7 @@
 import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI } from '../types';
+import axios from 'axios';
 
-exports
-const loginUser = (userData, history) => (dispatch) => {
+export const loginUser = (userData, history) => (dispatch) => {
     dispatch({ type: LOADING_UI });
 
     axios.post('/login', userData)
