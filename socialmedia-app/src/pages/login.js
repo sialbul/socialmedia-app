@@ -12,8 +12,8 @@ import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 //redux stuff
-import {connect} from 'react-redux';
-import {loginUser} from '../redux/actions/userActions';
+import { connect } from "react-redux";
+import { loginUser } from "../redux/actions/userActions";
 
 const styles = (theme) => ({
     ...theme.spreadThis,
@@ -29,9 +29,9 @@ class login extends Component {
         };
     }
 
-    componentWillReceiveProps(nextProp){
-        if(nextProp.UI.errors){
-            this.setState({errors:nextProp.UI.errors});
+    componentWillReceiveProps(nextProp) {
+        if (nextProp.UI.errors) {
+            this.setState({ errors: nextProp.UI.errors });
         }
     }
     handleSubmit = (event) => {
@@ -41,8 +41,6 @@ class login extends Component {
             password: this.state.password,
         };
         this.props.loginUser(userData, this.props.history);
-
-
     };
 
     handleChange = (event) => {
@@ -51,7 +49,10 @@ class login extends Component {
         });
     };
     render() {
-        const { classes, UI:{loading} } = this.props;
+        const {
+            classes,
+            UI: { loading },
+        } = this.props;
         const { errors } = this.state;
         return (
             <Grid container className={classes.form}>
@@ -89,7 +90,7 @@ class login extends Component {
                             value={this.state.password}
                             onChange={this.handleChange}
                             fullWidth
-                        />
+                        />{" "}
                         {errors.general && (
                             <Typography
                                 variant="body2"
@@ -116,8 +117,8 @@ class login extends Component {
                         <small>
                             {" "}
                             Dont have an account ? Sign up{" "}
-                            <Link to="/signup"> here </Link>
-                        </small>
+                            <Link to="/signup"> here </Link>{" "}
+                        </small>{" "}
                     </form>{" "}
                 </Grid>{" "}
                 <Grid item sm />
@@ -128,19 +129,20 @@ class login extends Component {
 
 login.propTypes = {
     classes: PropTypes.object.isRequired,
-    loginUser : PropTypes.func.isRequired, 
-    user : PropTypes.object.isRequired,
-    UI: PropTypes.object.isRequired
+    loginUser: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+    UI: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) =>({
-    user:state.user,
-    UI:state.UI
+const mapStateToProps = (state) => ({
+    user: state.user,
+    UI: state.UI,
 });
 
 const mapActionsToProps = {
-    loginUser
+    loginUser,
+};
 
-}
-
-export default connect({mapStateToProps, mapActionsToProps})(withStyles(styles)(login));
+export default connect({ mapStateToProps, mapActionsToProps })(
+    withStyles(styles)(login)
+);

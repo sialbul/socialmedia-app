@@ -1,4 +1,4 @@
-import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_AUTHENTICATED } from '../types';
+import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, SET_AUTHENTICATED } from '../types';
 
 const initialState = {
     authenticated: false,
@@ -14,7 +14,7 @@ export default function(state = initialState, action) {
                 ...state,
                 authenticated: true
             };
-        case SET_AUTHENTICATED:
+        case SET_UNAUTHENTICATED:
             return initialState;
         case SET_USER:
             return {
