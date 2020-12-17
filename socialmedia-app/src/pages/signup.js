@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
-import AppIcon from "../images/head.png";
-import axios from 'axios';
+import AppIcon from '../images/head.png';
 import { Link } from 'react-router-dom';
 
 import Grid from "@material-ui/core/Grid";
@@ -59,7 +58,7 @@ class signup extends Component {
         });
     };
     render() {
-        const { classes, UI:{loading} } = this.props;
+        const { classes, UI: { loading } } = this.props;
         const { errors } = this.state;
         return (
             <Grid container className={classes.form}>
