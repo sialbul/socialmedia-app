@@ -1,24 +1,23 @@
 import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
-import AppIcon from '../images/head.png';
-import { Link } from 'react-router-dom';
+import AppIcon from "../images/head2.jpg";
+import { Link } from "react-router-dom";
 
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 //Redux Stuff
 
-import { connect } from 'react-redux';
-import { signupUser } from '../redux/actions/userActions';
-
+import { connect } from "react-redux";
+import { signupUser } from "../redux/actions/userActions";
 
 const styles = (theme) => ({
-    ...theme.spreadThis
-})
+    ...theme
+});
 
 class signup extends Component {
     constructor() {
@@ -40,17 +39,16 @@ class signup extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         this.setState({
-            loading: true
-        })
+            loading: true,
+        });
         const newUserData = {
             email: this.state.email,
             password: this.state.password,
             confirmPassword: this.state.confirmPassword,
-            handle: this.state.handle
+            handle: this.state.handle,
         };
         this.props.signupUser(newUserData, this.props.history);
-
-    }
+    };
 
     handleChange = (event) => {
         this.setState({
@@ -58,7 +56,10 @@ class signup extends Component {
         });
     };
     render() {
-        const { classes, UI: { loading } } = this.props;
+        const {
+            classes,
+            UI: { loading },
+        } = this.props;
         const { errors } = this.state;
         return (
             <Grid container className={classes.form}>
@@ -68,10 +69,10 @@ class signup extends Component {
                         src={AppIcon}
                         alt="Man Image"
                         className={classes.image}
-                    />
+                    />{" "}
                     <Typography variant="h3" className={classes.pageTitle}>
-                        Signup
-                    </Typography>
+                        Signup{" "}
+                    </Typography>{" "}
                     <form noValidate onSubmit={this.handleSubmit}>
                         <TextField
                             id="email"
@@ -122,26 +123,35 @@ class signup extends Component {
                             fullWidth
                         />
                         {errors.general && (
-                            <Typography variant="body2"
+                            <Typography
+                                variant="body2"
                                 className={classes.customError}>
-                                {errors.general}
+                                {" "}
+                                {errors.general}{" "}
                             </Typography>
-                        )}
+                        )}{" "}
                         <Button
                             type="submit"
                             variant="contained"
                             color="primary"
                             className={classes.button}
                             disabled={loading}>
-                            Submit
+                            Submit{" "}
                             {loading && (
-                                <CircularProgress size={30} className={classes.progress} />
-                            )}
-                        </Button>
+                                <CircularProgress
+                                    size={30}
+                                    className={classes.progress}
+                                />
+                            )}{" "}
+                        </Button>{" "}
                         <br />
-                        <small>Already have an account? Login <Link to="/login">here</Link></small>
-                    </form>
-                </Grid>
+                        <small>
+                            {" "}
+                            Already have an account ? Login{" "}
+                            <Link to="/login"> here </Link>
+                        </small>
+                    </form>{" "}
+                </Grid>{" "}
                 <Grid item sm />
             </Grid>
         );
@@ -152,11 +162,13 @@ signup.propTypes = {
     classes: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
     UI: PropTypes.object.isRequired,
-    signupUser: PropTypes.func.isRequired
+    signupUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
     user: state.user,
-    UI: state.UI
-})
-export default connect(mapStateToProps, { signupUser })(withStyles(styles)(signup));
+    UI: state.UI,
+});
+export default connect(mapStateToProps, { signupUser })(
+    withStyles(styles)(signup)
+);

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
-import AppIcon from "../images/head.png";
+import AppIcon from "../images/head2.jpg";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -16,7 +16,7 @@ import { connect } from "react-redux";
 import { loginUser } from "../redux/actions/userActions";
 
 const styles = (theme) => ({
-    ...theme.spreadThis,
+    ...theme
 });
 
 class login extends Component {
