@@ -4,7 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 // import EditDetails from './EditDetails';
-// import MyButton from '../../util/MyButton';
+import MyButton from '../../util/MyButton';
 // import ProfileSkeleton from '../../util/ProfileSkeleton';
 // MUI stuff
 import Button from '@material-ui/core/Button';
@@ -64,7 +64,7 @@ class Profile extends Component {
               <MyButton
                 tip="Edit profile picture"
                 onClick={this.handleEditPicture}
-                btnClassName="button"
+                className="button"
               >
                 <EditIcon color="primary" />
               </MyButton>
