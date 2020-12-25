@@ -9,11 +9,14 @@ import Button from "@material-ui/core/Button";
 
 export class Navbar extends Component {
     render() {
+        const
         return (
             <div>
                 <AppBar>
                     <Toolbar className="navbar-container">
-                        <Button color="inherit" component={Link} to="/login">
+                        {authenticated ?():(
+                            <Fragment>
+                            <Button color="inherit" component={Link} to="/login">
                             {" "}
                             LOGIN{" "}
                         </Button>{" "}
@@ -25,6 +28,10 @@ export class Navbar extends Component {
                             {" "}
                             SIGNUP{" "}
                         </Button>{" "}
+                        </Fragment>
+
+
+                        )}
                     </Toolbar>{" "}
                 </AppBar>{" "}
             </div>
