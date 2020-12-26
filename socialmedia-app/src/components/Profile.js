@@ -4,8 +4,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import EditDetails from './EditDetails';
-import MyButton from '../../util/MyButton';
-import ProfileSkeleton from '../../util/ProfileSkeleton';
+import MyButton from '../util/MyButton';
+import ProfileSkeleton from '../util/ProfileSkeleton';
 // MUI stuff
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -19,10 +19,10 @@ import EditIcon from '@material-ui/icons/Edit';
 import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
 //Redux
 import { connect } from 'react-redux';
-import { logoutUser, uploadImage } from '../../redux/actions/userActions';
+import { logoutUser, uploadImage } from '../redux/actions/userActions';
 
 const styles = (theme) => ({
-  ...theme
+    ...theme.spreadThis
 });
 
 class Profile extends Component {
