@@ -6,12 +6,12 @@ const initialState = {
     loading: false
 };
 
-export default function(state = initialState, actions) {
-    switch (actions.type) {
+export default function(state = initialState, action) {
+    switch (action.type) {
         case LOADING_DATA:
             return {
                 ...state,
-                loading: ture
+                loading: true
             }
 
         case SET_SCREAMS:
@@ -27,6 +27,9 @@ export default function(state = initialState, actions) {
             state.screams[index] = action.payload;
             return {
                 ...state
-            }
+            };
+        default:
+            return state;
+
     }
 }

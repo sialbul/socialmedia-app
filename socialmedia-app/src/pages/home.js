@@ -14,11 +14,10 @@ class home extends Component {
         this.props.getScreams();
     }
     render() {
-        let recentScreamsMarkUp = this.state.screams ? (
-            this.state.screams.map((scream) => (
-                <Scream key={scream.screamId} scream={scream} />
-            ))
-        ) : (
+        const { screams, loading } = this.props.data;
+        let recentScreamsMarkUp = loading ? (
+            screams.map((scream) => <Scream key={scream.screamId} scream={scream} />
+            )) : (
             <p> Loading... </p>
         );
         return (
@@ -37,10 +36,10 @@ class home extends Component {
 
 home.propTypes = {
     getScreams: PropTypes.func.isRequired,
-    data: PropTypes.object.isRequired
-}
+    data: PropTypes.object.isRequired,
+};
 
-const mapStateToProps =state =>({
-    data: state.data
-})
-export default connect(mapStateToProps, {getScreams})(home);
+const mapStateToProps = (state) => ({
+    data: state.data,
+});
+export default connect(mapStateToProps, { getScreams })(home);
