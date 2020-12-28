@@ -11,7 +11,7 @@ import store from "./redux/store";
 import { SET_AUTHENTICATED } from "./redux/types";
 import { logoutUser, getUserData } from "./redux/actions/userActions";
 //Components
-import Navbar from "./components/Navbar";
+import Navbar from "./components/layout/Navbar";
 import AuthRoute from "./util/AuthRoute";
 import themeObject from './util/theme';
 
@@ -38,29 +38,33 @@ if (token) {
 }
 
 function App() {
-    return (
-        <MuiThemeProvider theme={theme}>
-            <Provider store={store}>
-                <Router>
-                    <Navbar />
-                    <div className="container">
-                        <Switch>
-                            <Route path="/" exact component={home} />{" "}
-                            <AuthRoute
-                                path="/login"
-                                exact
-                                component={login}
-                            />{" "}
-                            <AuthRoute
-                                path="/signup"
-                                exact
-                                component={signup}
-                            />{" "}
-                        </Switch>{" "}
-                    </div>{" "}
-                </Router>{" "}
-            </Provider>{" "}
-        </MuiThemeProvider>
+    return ( <
+        MuiThemeProvider theme = { theme } >
+        <
+        Provider store = { store } >
+        <
+        Router >
+        <
+        Navbar / >
+        <
+        div className = "container" >
+        <
+        Switch >
+        <
+        Route path = "/"
+        exact component = { home }
+        />{" "} <
+        AuthRoute path = "/login"
+        exact component = { login }
+        />{" "} <
+        AuthRoute path = "/signup"
+        exact component = { signup }
+        />{" "} <
+        /Switch>{" "} <
+        /div>{" "} <
+        /Router>{" "} <
+        /Provider>{" "} <
+        /MuiThemeProvider>
     );
 }
 
