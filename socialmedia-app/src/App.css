@@ -9,8 +9,12 @@ body {
     max-width: 1200px;
 }
 
-.navbar-container {
+.nav-container {
     margin: auto;
+}
+
+.nav-container svg {
+    color: #fff;
 }
 
 a {

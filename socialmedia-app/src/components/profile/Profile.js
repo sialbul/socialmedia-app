@@ -6,7 +6,6 @@ import dayjs from 'dayjs';
 import EditDetails from './EditDetails';
 import MyButton from '../../util/MyButton';
 import ProfileSkeleton from '../../util/ProfileSkeleton';
-
 // MUI stuff
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -73,8 +72,8 @@ class Profile extends Component {
                 <
                 EditIcon color = "primary" / >
                 <
-                /MyButton> <
-                /div> <
+                /MyButton> < /
+                div > <
                 hr / >
                 <
                 div className = "profile-details" >
@@ -112,8 +111,8 @@ class Profile extends Component {
                         )
                     } <
                     CalendarToday color = "primary" / > { ' ' } <
-                    span > Joined { dayjs(createdAt).format('MMM YYYY') } < /span> <
-                    /div> <
+                    span > Joined { dayjs(createdAt).format('MMM YYYY') } < /span> < /
+                    div > <
                     MyButton tip = "Logout"
                     onClick = { this.handleLogout } >
                     <
@@ -122,8 +121,8 @@ class Profile extends Component {
                     /MyButton> <
                     EditDetails / >
                     <
-                    /div> <
-                    /Paper>
+                    /div> < /
+                    Paper >
                 ): ( <
                     Paper className = { classes.paper } >
                     <
@@ -144,8 +143,8 @@ class Profile extends Component {
                     component = { Link }
                     to = "/signup" >
                     Signup <
-                    /Button> <
-                    /div> <
+                    /Button> < /
+                    div > <
                     /Paper>
                 )
             ) : ( <
